@@ -3,6 +3,7 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkSmartPointer.h>
+#include "MyVolume.h"
 /*A minha tela.
  * Forma de usar:
  * 1)Construir o objeto
@@ -25,6 +26,8 @@ public:
 	 * a janela for fechada, então deve ser a última coisa a ser invocada porque o que vier depois
 	 * dela só será chamado quando a janela fechar.*/
 	void StartEventLoop();
+
+	void AddVolume(MyVolume& vol);
 
 	void CriarObjetoDeTeste();
 };

@@ -25,6 +25,12 @@ void Tela::StartEventLoop()
 	interactor->Start();
 }
 
+void Tela::AddVolume(MyVolume& vol)
+{
+	renderer->AddVolume(vol.GetActor());
+	renderer->ResetCamera();
+}
+
 void Tela::CriarObjetoDeTeste()
 {
 	vtkSmartPointer<vtkCubeSource> testeCubeSource = vtkSmartPointer<vtkCubeSource>::New();

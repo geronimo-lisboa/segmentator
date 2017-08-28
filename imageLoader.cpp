@@ -47,6 +47,10 @@ itk::Image<float, 3>::Pointer ImageLoader::LoadImage(std::string dir, std::strin
 	nameGenerator->SetDirectory(dir);
 	//This list has all the images in the directory
 	SeriesIdContainer seriesUID = nameGenerator->GetSeriesUIDs();
+	for(std::string str : seriesUID)
+	{
+		std::cout << "id = " << str << std::endl;
+	}
 	FileNamesContainer fileNames;
 	if(seriesUID.size()==1)
 	{
