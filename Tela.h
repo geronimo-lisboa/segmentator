@@ -19,7 +19,7 @@ private:
 public:
 	/*Construtor - Cria a tela, mas para ela começar a captar os eventos, ativar o loop de 
 	 * eventos, a ultima tela a ser criada terá que invocar StartEventLoop();*/
-	Tela();
+	Tela(int top, int left, int width, int height);
 	/*Renderiza a tela.*/
 	void Render();
 	/*Começa o loop de eventos. O thread principal irá entrar nessa função e só voltará quando 

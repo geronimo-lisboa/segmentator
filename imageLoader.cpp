@@ -4,6 +4,7 @@
 #include <itkGDCMSeriesFileNames.h>
 #include <itkCommand.h>
 #include <sstream>
+#include <itkOrientImageFilter.h>
 
 //Typedefs
 typedef itk::Image<float, 3> ImageType;
@@ -12,6 +13,7 @@ typedef itk::GDCMImageIO ImageIOType;
 typedef itk::GDCMSeriesFileNames NamesGeneratorType;
 typedef std::vector< std::string >    SeriesIdContainer;
 typedef std::vector< std::string >   FileNamesContainer;
+typedef itk::OrientImageFilter<ImageType, ImageType> OrientImageFilterType;
 //O observador do progresso da carga para eu ter alguma resposta do que está acontecendo.
 namespace itk
 {
@@ -74,11 +76,40 @@ itk::Image<float, 3>::Pointer ImageLoader::LoadImage(std::string dir, std::strin
 	reader->SetFileNames(fileNames);
 	try
 	{
+		//Carrega
 		reader->AddObserver(itk::ProgressEvent(), obs);
 		reader->Update();
 		ImageType::Pointer result = reader->GetOutput();
 		result->Print(std::cout);
-		return result;
+		//Reorienta pra que a imagem esteja sempre RIP
+		OrientImageFilterType::Pointer reorientador = OrientImageFilterType::New();
+		reorientador->SetInput(result);
+		reorientador->AddObserver(itk::ProgressEvent(), obs);
+		reorientador->UseImageDirectionOn();
+		reorientador->SetDesiredCoordinateOrientation(itk::SpatialOrientation::ITK_COORDINATE_ORIENTATION_RIP);
+		reorientador->Update();
+		//Copia o resultado do reorientador pq ele vai morrer.
+		ImageType::Pointer output = ImageType::New();
+		const int inSzX = reorientador->GetOutput()->GetLargestPossibleRegion().GetSize()[0];
+		const int inSzY = reorientador->GetOutput()->GetLargestPossibleRegion().GetSize()[1];
+		const int inSzZ = reorientador->GetOutput()->GetLargestPossibleRegion().GetSize()[2];
+		const double inSpacingX = reorientador->GetOutput()->GetSpacing()[0];
+		const double inSpacingY = reorientador->GetOutput()->GetSpacing()[1];
+		const double inSpacingZ = reorientador->GetOutput()->GetSpacing()[2];
+		output->SetRegions(reorientador->GetOutput()->GetLargestPossibleRegion());
+		output->Allocate();
+		itk::ImageRegionConstIterator<ImageType> inputIterator(reorientador->GetOutput(), reorientador->GetOutput()->GetLargestPossibleRegion());
+		itk::ImageRegionIterator<ImageType> outputIterator(output, output->GetLargestPossibleRegion());
+		const double inSpacing[] = { inSpacingX, inSpacingY, inSpacingZ };
+		output->SetSpacing(inSpacing);
+		while (!inputIterator.IsAtEnd())
+		{
+			outputIterator.Set(inputIterator.Get());
+			++inputIterator;
+			++outputIterator;
+		}
+		//resultado
+		return output;
 	}
 	catch (itk::ExceptionObject& ex)
 	{

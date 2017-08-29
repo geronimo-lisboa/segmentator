@@ -5,11 +5,12 @@
 #include "vtkPolyDataMapper.h"
 #include "vtkActor.h"
 
-Tela::Tela()
+Tela::Tela(int top, int left, int width, int height)
 {
 	renderer = vtkSmartPointer<vtkRenderer>::New();
 	renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
-	renderWindow->SetSize(300, 300);
+	renderWindow->SetPosition(left, top);
+	renderWindow->SetSize(width, height);
 	renderWindow->AddRenderer(renderer);
 	interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	interactor->SetRenderWindow(renderWindow);
