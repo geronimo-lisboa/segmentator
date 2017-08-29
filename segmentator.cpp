@@ -2,8 +2,7 @@
 #include <memory>
 #include "imageLoader.h"
 #include "myVolume.h"
-#include <vtkSmartVolumeMapper.h>
-#include <vtkDICOMImageReader.h>
+#include "telaImagemInteractor.h"
 using namespace std;
 
 int main(int argc, char** argv)
@@ -12,6 +11,8 @@ int main(int argc, char** argv)
 	shared_ptr<Tela> tela00, tela01;
 	tela00 = make_shared<Tela>(0,0, 300, 300);
 	tela00->Render();
+	vtkSmartPointer<TelaImagemInteractor> tela00Interactor = vtkSmartPointer<TelaImagemInteractor>::New();
+	tela00->SetInteractorStyle(tela00Interactor);
 	tela01 = make_shared<Tela>(301, 0, 300, 300);
 	tela01->CriarObjetoDeTeste();
 	tela01->Render();

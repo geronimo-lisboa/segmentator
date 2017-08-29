@@ -4,6 +4,8 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkSmartPointer.h>
 #include "MyVolume.h"
+#include <vtkInteractorStyle.h>
+
 /*A minha tela.
  * Forma de usar:
  * 1)Construir o objeto
@@ -19,7 +21,7 @@ private:
 public:
 	/*Construtor - Cria a tela, mas para ela começar a captar os eventos, ativar o loop de 
 	 * eventos, a ultima tela a ser criada terá que invocar StartEventLoop();*/
-	Tela(int top, int left, int width, int height);
+	Tela( int left, int top, int width, int height);
 	/*Renderiza a tela.*/
 	void Render();
 	/*Começa o loop de eventos. O thread principal irá entrar nessa função e só voltará quando 
@@ -30,4 +32,6 @@ public:
 	void AddVolume(MyVolume& vol);
 
 	void CriarObjetoDeTeste();
+
+	void SetInteractorStyle(vtkSmartPointer<vtkInteractorStyle> style);
 };

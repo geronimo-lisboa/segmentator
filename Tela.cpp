@@ -5,7 +5,7 @@
 #include "vtkPolyDataMapper.h"
 #include "vtkActor.h"
 
-Tela::Tela(int top, int left, int width, int height)
+Tela::Tela( int left, int top, int width, int height)
 {
 	renderer = vtkSmartPointer<vtkRenderer>::New();
 	renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
@@ -48,4 +48,9 @@ void Tela::CriarObjetoDeTeste()
 	testeCubeActor->RotateY(-45.0);
 	renderer->AddActor(testeCubeActor);
 	renderer->ResetCamera();
+}
+
+void Tela::SetInteractorStyle(vtkSmartPointer<vtkInteractorStyle> style)
+{
+	interactor->SetInteractorStyle(style);
 }
