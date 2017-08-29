@@ -22,3 +22,6 @@ add_executable(segmentator ${my_source_files} )
 #Liga as bibliotecas ao executável definido
 target_link_libraries(segmentator ${ITK_LIBRARIES} ${VTK_LIBRARIES})
 target_link_libraries(segmentator ${D3D_LIBRARY} ${WBEM_LIBRARY})
+
+include_directories("C:/libs/AntTweakBar/include")
+target_link_libraries(segmentator "C:/libs/AntTweakBar/lib/AntTweakBar64.lib")

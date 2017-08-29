@@ -1,10 +1,16 @@
 #pragma once
 #include <vtkRenderer.h>
+#include <vtkCameraPass.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkSmartPointer.h>
 #include "MyVolume.h"
 #include <vtkInteractorStyle.h>
+#include <vtkLightsPass.h>
+#include <vtkDefaultPass.h>
+#include <vtkSequencePass.h>
+#include <vtkRenderPassCollection.h>
+#include <AntTweakBar.h>
 
 /*A minha tela.
  * Forma de usar:
@@ -18,6 +24,13 @@ private:
 	vtkSmartPointer<vtkRenderWindow> renderWindow;
 	vtkSmartPointer<vtkRenderer> renderer;
 	vtkSmartPointer<vtkRenderWindowInteractor> interactor;
+	
+	vtkSmartPointer<vtkCameraPass> cameraPass;
+	vtkSmartPointer<vtkLightsPass> lightPass;
+	vtkSmartPointer<vtkDefaultPass> defaultPass;
+	vtkSmartPointer<vtkSequencePass> sequencePass;
+	vtkSmartPointer<vtkRenderPassCollection> passes;
+
 public:
 	/*Construtor - Cria a tela, mas para ela começar a captar os eventos, ativar o loop de 
 	 * eventos, a ultima tela a ser criada terá que invocar StartEventLoop();*/

@@ -14,6 +14,17 @@ Tela::Tela( int left, int top, int width, int height)
 	renderWindow->AddRenderer(renderer);
 	interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	interactor->SetRenderWindow(renderWindow);
+
+	lightPass = vtkSmartPointer<vtkLightsPass>::New();
+	defaultPass = vtkSmartPointer<vtkDefaultPass>::New();
+	passes = vtkSmartPointer<vtkRenderPassCollection>::New();
+	passes->AddItem(lightPass);
+	passes->AddItem(defaultPass);
+	sequencePass = vtkSmartPointer<vtkSequencePass>::New();
+	sequencePass->SetPasses(passes);
+	cameraPass = vtkSmartPointer<vtkCameraPass>::New();
+	cameraPass->SetDelegatePass(sequencePass);
+	renderer->SetPass(cameraPass);
 }
 
 void Tela::Render()
