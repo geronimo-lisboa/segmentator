@@ -5,6 +5,11 @@
 #include "vtkPolyDataMapper.h"
 #include "vtkActor.h"
 
+#include <vtkObjectFactory.h>
+
+
+
+
 Tela::Tela( int left, int top, int width, int height)
 {
 	renderer = vtkSmartPointer<vtkRenderer>::New();

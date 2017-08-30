@@ -10,7 +10,8 @@
 #include <vtkDefaultPass.h>
 #include <vtkSequencePass.h>
 #include <vtkRenderPassCollection.h>
-#include <AntTweakBar.h>
+
+
 
 /*A minha tela.
  * Forma de usar:

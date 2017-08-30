@@ -4,7 +4,6 @@
 #include "myVolume.h"
 #include "telaImagemInteractor.h"
 
-#include <AntTweakBar.h>
 using namespace std;
 
 int main(int argc, char** argv)
